@@ -16,7 +16,7 @@ export default function ButtonAppBar(props: any) {
     props.resetUser()
   }
 
-  function renderLoginOutButton() {
+  function LoginOutButton() {
     if (props.userName) {
       return (
         <Button onClick={onLogoutClick} color="inherit">
@@ -47,10 +47,10 @@ export default function ButtonAppBar(props: any) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Page summary
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="body2" align="right" sx={{ mr: 4 }}>
             {props.userName}
           </Typography>
-          {renderLoginOutButton()}
+          <LoginOutButton/>
         </Toolbar>
       </AppBar>
     </Box>
