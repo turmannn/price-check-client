@@ -1,4 +1,5 @@
-import * as React from 'react';
+// import * as React from 'react';
+import { useCookies } from 'react-cookie';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useCookies } from 'react-cookie';
 import ServerConnect from '../support/server-connect'
-import AuthContext from '../common/authContext'
 
 function Copyright(props: any) {
   return (
@@ -34,36 +33,6 @@ const theme = createTheme();
 export default function SignIn(props: any) {
   const sc = ServerConnect();
   const [cookies, setCookie] = useCookies(['Authorization']);
-  const { authenticated, setAuthenticated } = React.useContext(AuthContext)
-
-
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   // eslint-disable-next-line no-console
-
-  //   const postData = async () => {
-  //     const res = await fetch(
-  //       `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-  //       {
-  //         method: 'post',
-  //         headers: {'Content-Type': 'application/json'},
-  //         body: JSON.stringify({
-  //           userNameCustom: data.get('email'),
-  //           password: data.get('password')
-  //         })
-  //       }
-  //     );
-  //     const body = await res.json();
-  //     console.log(body);
-  //     setCookie(
-  //       'Authorization',
-  //       `Bearer ${body['access_token']}`,
-  //       { path: '/' }
-  //     );
-  //   }
-  //   postData()
-  // };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -83,7 +52,7 @@ export default function SignIn(props: any) {
           `Bearer ${body['access_token']}`,
           { path: '/' }
         );
-        setAuthenticated(true);
+        props.setUser(data.get('email'));
         props.hideLoginDialog();
       } else {
         alert('Error happened')
@@ -105,7 +74,7 @@ export default function SignIn(props: any) {
           }}
         >
           <Box sx={{display: 'flex', justifyContent: 'end' }}>
-            <Button variant="contained" onClick={props.onCloseClick}>X</Button>
+            <Button variant="contained" onClick={props.hideLoginDialog}>X</Button>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

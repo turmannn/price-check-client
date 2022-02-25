@@ -1,4 +1,5 @@
 // import * as React,  from 'react';
+import { useCookies } from 'react-cookie';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -6,17 +7,29 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import React, { useContext } from "react";
-import authContext from "./authContext";
-
-// interface Data {
-//   name: string;
-// }
 
 export default function ButtonAppBar(props: any) {
-  // const { setAuthenticated } = useContext(authContext);
-  // const handleLogin = () => setAuthenticated(true);
-  // const handleLogout = () => setAuthenticated(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
+
+  function onLogoutClick () {
+    removeCookie('Authorization');
+    props.resetUser()
+  }
+
+  function renderLoginOutButton() {
+    if (props.userName) {
+      return (
+        <Button onClick={onLogoutClick} color="inherit">
+          Logout
+        </Button>
+      );
+    }
+    return (
+      <Button onClick={props.showLoginDialog} color="inherit">
+        Login
+      </Button>
+    );
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,12 +50,7 @@ export default function ButtonAppBar(props: any) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {props.userName}
           </Typography>
-          <Button
-            // onClick={props.userName ? props.handleLoginClick : handleLogoutClick}
-            onClick={props.userName ? props.onLogoutClick : props.onLoginClick}
-            color="inherit">
-            { props.userName ? 'Logout' : 'Login' }
-        </Button>
+          {renderLoginOutButton()}
         </Toolbar>
       </AppBar>
     </Box>
