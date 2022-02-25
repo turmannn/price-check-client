@@ -1,23 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
+import './index.css';
 import App from './App';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Landing from './components/Landing/Landing';
-import Dashboard from './components/Dashboard/Dashoard';
 import reportWebVitals from './reportWebVitals';
-
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} >
-          <Route index element={<Landing />} />
-          <Route path="dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
