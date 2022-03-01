@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './components/Landing/Landing';
 import Dashboard from './components/Dashboard/Dashoard';
 import reportWebVitals from './reportWebVitals';
+import constants from './common/constants'
 
 
 ReactDOM.render(
@@ -14,7 +15,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} >
           <Route index element={<Landing />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path={constants.PATH_DASHBOARD} element={<Dashboard/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

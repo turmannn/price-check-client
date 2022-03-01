@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ServerConnect from '../support/server-connect'
+import { Route, useNavigate } from 'react-router-dom';
+import constants from '../common/constants'
 
 function Copyright(props: any) {
   return (
@@ -33,6 +35,7 @@ const theme = createTheme();
 export default function SignIn(props: any) {
   const sc = ServerConnect();
   const [cookies, setCookie] = useCookies(['Authorization']);
+  let navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,22 +44,25 @@ export default function SignIn(props: any) {
 
     const login = async () => {
       const body = await sc.postData(
-        'auth/login',
+        constants.PATH_SERVER_AUTH,
         { userNameCustom: data.get('email'), password: data.get('password') }
       )
-      console.log(body);
+      if (!body) {
+        alert('Connection problem happened. Try again later');
+      }
       const accessToken = body['access_token'];
       if (accessToken) {
         setCookie(
           'Authorization',
-          `Bearer ${body['access_token']}`,
+          `Bearer ${accessToken}`,
           { path: '/' }
         );
         props.setUser(data.get('email'));
         props.hideLoginDialog();
       } else {
-        alert('Error happened')
+        alert('Credentials pair does not match our database.')
       }
+      navigate(constants.PATH_DASHBOARD);
     }
     login()
   };

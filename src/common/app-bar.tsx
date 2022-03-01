@@ -7,13 +7,16 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
 
 export default function ButtonAppBar(props: any) {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
+  const navigate = useNavigate();
 
   function onLogoutClick () {
     removeCookie('Authorization');
     props.resetUser()
+    navigate('/');
   }
 
   function LoginOutButton() {
