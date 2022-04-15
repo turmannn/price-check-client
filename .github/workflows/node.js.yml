@@ -8,6 +8,10 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+    
+env:
+  ## Sets environment variables
+  CI: false   
 
 jobs:
   build:
