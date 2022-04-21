@@ -84,13 +84,13 @@ jobs:
         # Remote port
   #       REMOTE_PORT: # optional, default is 22
         # Source directory
-        SOURCE: "dist/"
+        SOURCE: "build/"
         # Target directory
         TARGET: ${{ secrets.TARGET_PATH }} # optional, default is /home/REMOTE_USER/
         # Arguments to pass to rsync
         ARGS: "-rltgoDzvO"
         # An array of folder to exclude
-        EXCLUDE: "/dist/, /node_modules/"
+        EXCLUDE: "/build/, /node_modules/"
 
   #       SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
   #       ARGS: "-rltgoDzvO"
