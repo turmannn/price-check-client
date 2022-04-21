@@ -67,6 +67,8 @@ jobs:
 #       user_email: 'github-actions[bot]@users.noreply.github.com'
 #       github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
 #       repository: ${{ github.repository }}
+    - name: print remote host address
+      run: echo $REMOTE_HOST_ADDR
       
     - name: ssh deploy
     # You may pin to the exact commit or the version.
