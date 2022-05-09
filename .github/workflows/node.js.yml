@@ -70,6 +70,19 @@ jobs:
     - name: print remote host address
       run: echo ${{ secrets.REMOTE_HOST_USER }}
       
+    - name: clean target folder
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST_ADDR }}
+        username: ${{ secrets.REMOTE_HOST_USER }}
+        key: ${{ secrets.CD_SK }}
+
+        script: |
+          ls -la ${{ secrets.TARGET_PATH }}
+          rm -r ${{ secrets.TARGET_PATH }}/*
+          ls -al ${{ secrets.TARGET_PATH }}
+      
+      
     - name: ssh deploy
     # You may pin to the exact commit or the version.
     # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
